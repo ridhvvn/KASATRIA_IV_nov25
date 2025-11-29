@@ -188,12 +188,16 @@ function init() {
 
 	for (let i = 0, l = objects.length; i < l; i++) {
 
-		const theta = i * 0.175 + Math.PI;
-		const y = - (i * 8) + 450;
-
 		const object = new THREE.Object3D();
 
-		object.position.setFromCylindricalCoords(900, theta, y);
+		// Double Helix: Pair items at the same height, opposite sides
+		const row = Math.floor(i / 2);
+		const col = i % 2;
+
+		const theta = row * 0.2 + Math.PI + (col * Math.PI);
+		const y = - (row * 40) + 450; // Change 15 to adjust vertical spacing (height of cylinder)
+
+		object.position.setFromCylindricalCoords(900, theta, y); // Change 900 to adjust radius (width of cylinder)
 
 		vector.x = object.position.x * 2;
 		vector.y = object.position.y;
@@ -211,9 +215,13 @@ function init() {
 
 		const object = new THREE.Object3D();
 
-		object.position.x = ((i % 5) * 400) - 800;
-		object.position.y = (- (Math.floor(i / 5) % 5) * 400) + 800;
-		object.position.z = (Math.floor(i / 25)) * 1000 - 2000;
+		// Grid Configuration
+		const cols = 5; // Number of columns
+		const rows = 4; // Number of rows per layer
+
+		object.position.x = ((i % cols) * 400) - 800;
+		object.position.y = (- (Math.floor(i / cols) % rows) * 400) + 800;
+		object.position.z = (Math.floor(i / (cols * rows))) * 1000 - 2000;
 
 		targets.grid.push(object);
 
