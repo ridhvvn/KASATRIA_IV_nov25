@@ -107,13 +107,13 @@ function init() {
 		
 		if (netWorth < 100000) { // Example: Less than 1M
 			element.classList.add('red');
-			element.style.backgroundColor = 'rgba(239, 48, 34, ' + (Math.random() * 0.5 + 0.25) + ')';
+			element.style.backgroundColor = 'rgba(239, 48, 34, 0.5)';
 		} else if (netWorth < 200000) { // Example: Less than 10M
 			element.classList.add('yellow');
-			element.style.backgroundColor = 'rgba(253, 202, 53, ' + (Math.random() * 0.5 + 0.25) + ')';
+			element.style.backgroundColor = 'rgba(253, 202, 53, 0.5)';
 		} else { // 10M+
 			element.classList.add('green');
-			element.style.backgroundColor = 'rgba(58, 159, 72, ' + (Math.random() * 0.5 + 0.25) + ')';
+			element.style.backgroundColor = 'rgba(58, 159, 72, 0.5)';
 		}
 
 		const number = document.createElement('div');
