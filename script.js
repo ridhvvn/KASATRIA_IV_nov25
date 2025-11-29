@@ -58,8 +58,8 @@ async function loadTableData() {
 			// We need at least 6 columns: Name, URL, Age, Country, Interest, NetWorth
 			if (row.length >= 6) {
 				// Calculate grid position (18 columns wide)
-				const col = (itemIndex % 18) + 1;
-				const rowPos = Math.floor(itemIndex / 18) + 1;
+				const col = (itemIndex % 20) + 1;
+				const rowPos = Math.floor(itemIndex / 20) + 1;
 
 				// Push data into the flat array structure expected by Three.js
 				table.push(row[0]);                  // 0: Name (preserve space)
