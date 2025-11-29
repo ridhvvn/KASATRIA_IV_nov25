@@ -121,21 +121,42 @@ a {
 
 	.element .number {
 		position: absolute;
-		top: 20px;
-		right: 20px;
-		font-size: 12px;
-		color: rgba(127,255,255,0.75);
+		top: 10px;
+		right: 10px;
+		font-size: 8px;
+		color: rgba(255,255,255,0.75);
 	}
 
-	.element .symbol {
+	.element .country {
 		position: absolute;
-		top: 40px;
+		top: 10px;
+		left: 10px;
+		font-size: 8px;
+		color: rgba(255,255,255,0.75);
+	}
+
+	.element .name {
+		position: absolute;
+		bottom: 25px;
 		left: 0px;
 		right: 0px;
-		font-size: 60px;
+		font-size: 10px;
 		font-weight: bold;
 		color: rgba(255,255,255,0.75);
-		text-shadow: 0 0 10px rgba(0,255,255,0.95);
+	}
+
+	.element .photo {
+		position: absolute;
+		top: 20px;
+		left: 10px;
+		right: 10px;
+		z-index: -1;
+	}
+
+	.element .photo img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.element .details {
@@ -143,9 +164,40 @@ a {
 		bottom: 15px;
 		left: 0px;
 		right: 0px;
-		font-size: 12px;
-		color: rgba(127,255,255,0.75);
+		font-size: 8px;
+		color: rgba(255,255,255,0.75);
 	}
+
+/* Color variants for elements */
+.element.red {
+	box-shadow: 0px 0px 12px rgba(239, 48, 34, 0.5);
+	border: 1px solid rgba(239, 48, 34, 0.25);
+}
+
+.element.red:hover {
+	box-shadow: 0px 0px 12px rgba(239, 48, 34, 0.75);
+	border: 1px solid rgba(239, 48, 34, 0.75);
+}
+
+.element.yellow {
+	box-shadow: 0px 0px 12px rgba(253, 202, 53, 0.5);
+	border: 1px solid rgba(253, 202, 53, 0.25);
+}
+
+.element.yellow:hover {
+	box-shadow: 0px 0px 12px rgba(253, 202, 53, 0.75);
+	border: 1px solid rgba(253, 202, 53, 0.75);
+}
+
+.element.green {
+	box-shadow: 0px 0px 12px rgba(58, 159, 72, 0.5);
+	border: 1px solid rgba(58, 159, 72, 0.25);
+}
+
+.element.green:hover {
+	box-shadow: 0px 0px 12px rgba(58, 159, 72, 0.75);
+	border: 1px solid rgba(58, 159, 72, 0.75);
+}
 
 button {
 	color: rgba(127,255,255,0.75);
