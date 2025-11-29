@@ -216,3 +216,29 @@ button:active {
 	color: #000000;
 	background-color: rgba(0,255,255,0.75);
 }
+
+#user-profile {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	text-align: right;
+	z-index: 10;
+	font-family: Helvetica, sans-serif;
+	color: rgba(127,255,255,0.75);
+	pointer-events: none;
+}
+
+#user-profile img {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	vertical-align: middle;
+	margin-left: 10px;
+	border: 1px solid rgba(127,255,255,0.5);
+}
+
+#user-profile span {
+	vertical-align: middle;
+	font-size: 12px;
+	text-transform: uppercase;
+}
