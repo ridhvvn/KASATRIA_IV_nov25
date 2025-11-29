@@ -17,10 +17,21 @@
 </head>
 
 <body>
+    <div id="user-profile"></div>
     <script>
-        if (!localStorage.getItem('user')) {
+        const userJson = localStorage.getItem('user');
+        if (!userJson) {
             window.location.href = 'index.html';
+        } else {
+            const user = JSON.parse(userJson);
+            const profileDiv = document.getElementById('user-profile');
+            if (user.picture) {
+                profileDiv.innerHTML = `<span>${user.name}</span><img src="${user.picture}" alt="Profile">`;
+            } else {
+                profileDiv.innerHTML = `<span>${user.name}</span>`;
+            }
         }
+
         function logout() {
             localStorage.removeItem('user');
             window.location.href = 'index.html';
@@ -28,6 +39,7 @@
     </script>
 
     <div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> css3d - periodic table.
+    </div>
     </div>
     <div id="container"></div>
     <div id="menu">
