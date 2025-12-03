@@ -15,7 +15,7 @@ let camera, scene, renderer;
 let controls;
 
 const objects = [];
-const targets = { table: [], sphere: [], helix: [], grid: [] };
+const targets = { table: [], sphere: [], helix: [], grid: [], tetrahedron: [] };
 
 // 2. Instead of calling init() directly, we call our loader function
 // init();
@@ -227,6 +227,84 @@ function init() {
 
 	}
 
+	// tetrahedron
+
+	function get3DPosition(v1, v2, v3, u, v) {
+		const point = new THREE.Vector3();
+		point.lerpVectors(v1, v2, u); // Point on base edge (V1-V2)
+		point.lerp(v3, v);            // Interpolate towards top vertex (V3)
+		return point;
+	}
+
+	const radius = 1200;
+	const geometry = new THREE.TetrahedronGeometry(radius, 0);
+	const vertices = geometry.attributes.position.array;
+
+	const faceVertices = [
+		[2, 1, 0], [0, 3, 2], [1, 3, 0], [2, 3, 1]
+	];
+
+	const itemsPerFace = Math.ceil(objects.length / 4);
+
+	for (let faceId = 0; faceId < 4; faceId++) {
+        const V1 = new THREE.Vector3(vertices[faceVertices[faceId][0] * 3], vertices[faceVertices[faceId][0] * 3 + 1], vertices[faceVertices[faceId][0] * 3 + 2]);
+        const V2 = new THREE.Vector3(vertices[faceVertices[faceId][1] * 3], vertices[faceVertices[faceId][1] * 3 + 1], vertices[faceVertices[faceId][1] * 3 + 2]);
+        const V3 = new THREE.Vector3(vertices[faceVertices[faceId][2] * 3], vertices[faceVertices[faceId][2] * 3 + 1], vertices[faceVertices[faceId][2] * 3 + 2]);
+
+        // Calculate the normal vector for this face
+        // This vector points straight out from the flat surface
+        const faceCenter = new THREE.Vector3().addVectors(V1, V2).add(V3).divideScalar(3);
+        const faceNormal = faceCenter.clone().normalize();
+
+        // Slice data for this face
+        const start = faceId * itemsPerFace;
+        const end = Math.min(start + itemsPerFace, objects.length);
+        const faceObjectsCount = end - start;
+
+        if (faceObjectsCount <= 0) continue;
+
+        // Calculate total rows needed for this specific amount of data
+        let count = 0;
+        let totalRows = 0;
+        let r_calc = 1;
+        while (count < faceObjectsCount) {
+            count += Math.ceil(r_calc / 2);
+            totalRows = r_calc;
+            r_calc++;
+        }
+
+        let dataIndex = 0;
+        let r = 1;
+        while (dataIndex < faceObjectsCount) {
+            const itemsInRow = Math.ceil(r / 2);
+
+            // Vertical position v (1 at top V3, 0 at bottom V1-V2)
+            const v = 1 - (r / (totalRows + 1));
+
+            for (let c = 0; c < itemsInRow; c++) {
+                if (dataIndex >= faceObjectsCount) break;
+
+                // Horizontal position u (0 to 1 along the horizontal slice)
+                const u = (c + 0.5) / itemsInRow;
+
+                const position = get3DPosition(V1, V2, V3, u, v);
+
+                const object = new THREE.Object3D();
+                object.position.copy(position);
+
+                // Make the object look in the direction of the face normal
+                // This ensures all elements on this face are coplanar (flat)
+                const lookTarget = new THREE.Vector3().copy(object.position).add(faceNormal);
+                object.lookAt(lookTarget);
+
+                targets.tetrahedron.push(object);
+
+                dataIndex++;
+            }
+            r++;
+        }
+    }
+
 	//
 
 	renderer = new CSS3DRenderer();
@@ -265,6 +343,13 @@ function init() {
 	buttonGrid.addEventListener('click', function () {
 
 		transform(targets.grid, 2000);
+
+	});
+
+	const buttonTetrahedron = document.getElementById('tetrahedron');
+	buttonTetrahedron.addEventListener('click', function () {
+
+		transform(targets.tetrahedron, 2000);
 
 	});
 

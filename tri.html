@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Triangle Grid Display</title>
+    <style>
+        pre {
+            font-family: monospace;
+            font-size: 1.2em;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <h2>Triangle Grid Output</h2>
+    <pre id="triangle-output"></pre>
+    <script>
+    /**
+     * Maps a flat array of data sequentially into a formatted triangle grid string.
+     * Assumes the input array has enough elements to form a complete triangle.
+     * 
+     * @param {Array<any>} dataArray - The input 1D array of data.
+     * @returns {string} - The formatted triangle grid string.
+     */
+    function printTriangleGrid(dataArray) {
+        let dataIndex = 0;
+        let triangleOutput = "";
+        const totalElements = dataArray.length;
+        
+        let r = 1;
+        while (dataIndex < totalElements) {
+            let rowString = "";
+            // Pattern: 1, 1, 2, 2, 3, 3... items per row
+            const itemsInRow = Math.ceil(r / 2);
+            
+            for (let c = 0; c < itemsInRow; c++) {
+                if (dataIndex < totalElements) {
+                    rowString += dataArray[dataIndex] + " ";
+                    dataIndex++;
+                } else {
+                    break; 
+                }
+            }
+            triangleOutput += rowString.trim() + "\n";
+            r++;
+        }
+        return triangleOutput;
+    }
+
+    // Example Usage
+    const myArray = Array.from({length: 50}, () => 'x');
+
+    let output = printTriangleGrid(myArray);
+    document.getElementById('triangle-output').textContent = output;
+    </script>
+</body>
+</html>
